@@ -10,7 +10,7 @@
 :root {
   --paper: #FFFDF6;
   --ink: #171714;
-  --ink-soft: rgba(23, 23, 20, .62);
+  --ink-soft: rgba(23, 23, 20, .75);
   --accent: #B8301D;
   --highlight: #EFE9A6;
   --sand: #EADFC8;

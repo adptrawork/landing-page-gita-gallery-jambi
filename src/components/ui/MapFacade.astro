@@ -4,7 +4,7 @@ interface Props { embed: string }
 const { embed } = Astro.props;
 ---
 <div data-mapfacade data-src={embed} data-title={`Peta ${business.name}`} class="border-2 border-[#171714] bg-[#EADFC8] aspect-video w-full" style="box-shadow:6px 6px 0 0 #171714; overflow:hidden">
-  <button data-mapbtn type="button" class="relative block w-full h-full min-h-[48px] text-left cursor-pointer" aria-label={`Muat peta Google Maps ${business.name}`}>
+  <button data-mapbtn type="button" class="relative block w-full h-full min-h-[48px] text-left cursor-pointer">
     <img src={business.ogImage} alt="" aria-hidden="true" width="800" height="450" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
     <span class="absolute inset-0 flex flex-col justify-end gap-2 p-6" style="background:linear-gradient(to top, rgba(23,23,20,.82), transparent 62%)">
       <span class="text-[#FFFDF6] text-sm leading-relaxed max-w-[60ch]">{business.address}</span>

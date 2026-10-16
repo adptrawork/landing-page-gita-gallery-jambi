@@ -6,5 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://landing-page-gita-gallery-jambi.adi-putra-work1.workers.dev',
   output: 'static',
+  compressHTML: true,
+  build: { inlineStylesheets: 'always' },
   integrations: [tailwind(), sitemap()],
 });
