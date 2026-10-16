@@ -26,7 +26,14 @@ Prioritas: 1) situs milik target, 2) situs resmi brand disalin lokal ke public/i
 - gita-hero.jpg <- linktr.ee/GITA_GALLERY thumb lokasi IMG_9087 (milik toko)
 - gita-avatar.jpg <- linktr.ee/GITA_GALLERY avatar IMG_8584 (milik toko)
 - gita-toko-shopee.jpg <- linktr.ee/GITA_GALLERY thumb Shopee IMG_9090 (milik toko)
-- Slot picsum: gita-1..7 (Pixy, YOU, OMG, LT Pro, Viva, Hanasui, Azarine)
+- gita-p1.jpg (800x640, 78KB) <- Wikimedia Commons "Filmtone face makeup and sponge", foto Sumner M. Hansen (domain publik) — ilustrasi generik bedak untuk Pixy
+- gita-p2.jpg (600x450, 33KB) <- Wikimedia Commons "Mac Patternmaker BEIGE LIPS" oleh ookikioo (CC BY 2.0) — ilustrasi generik lip palette untuk YOU
+- gita-p3.jpg (800x600, 83KB) <- Wikimedia Commons "AVON Lipsticks" oleh Clarisselitiatco (CC BY-SA 3.0) — ilustrasi generik lipstik untuk OMG Bundle
+- gita-p4.jpg (800x800, 26KB) <- Wikimedia Commons "104 LIPS" oleh Venus hd g (CC BY-SA 4.0) — ilustrasi generik lipstik profesional untuk LT Pro
+- gita-p5.jpg (800x454, 76KB) <- Wikimedia Commons "Bedak utawa Wedhak" oleh Wiwik P (CC BY-SA 4.0) — ilustrasi generik bedak compact untuk Viva
+- gita-p6.jpg (600x450, 29KB) <- Wikimedia Commons "Mac Patternmaker PLUM LIPS" oleh ookikioo (CC BY 2.0) — ilustrasi generik lip palette untuk Hanasui
+- gita-p7.jpg (529x800, 76KB) <- Wikimedia Commons "LRP sunscreen bottle" oleh Netstars22 (CC BY-SA 4.0) — ilustrasi generik sunscreen untuk Azarine
+- Slot picsum: NOL (semua sudah lokal; foto brand official tetap prioritas bila tersedia)
 
 ### URL terblokir / tidak bisa di-scrape
 
