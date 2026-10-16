@@ -15,8 +15,8 @@ export const business = {
   hoursStatus: 'Terverifikasi',
   instagram: 'https://www.instagram.com/gitagallery_',
   instagramLabel: '@gitagallery_ • 37.9K pengikut',
-  title: 'Gita Gallery Jambi — Kosmetik, Grosir & Hampers Cantik',
-  description: 'Gita Gallery Jambi Jl Sei Sawang: kosmetik original, grosir, hampers & GoFood. Buka tiap hari 08.00–22.00, order via WA admin.',
+  title: 'Gita Gallery Jambi — Kosmetik, Grosir & Hampers Custom',
+  description: 'Gita Gallery Jl Sei Sawang Jambi: kosmetik original, harga grosir, hampers custom & GoFood. Buka 08.00–22.00, order via WA admin & grosir.',
   canonicalPath: '/',
   ogImage: '/images/gita-hero.jpg',
 };
