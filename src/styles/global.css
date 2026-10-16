@@ -49,13 +49,26 @@ img { max-width: 100%; height: auto; background: var(--sand); }
 }
 
 /* --- plate / poster frame --- */
-.plate { background: var(--paper); border: 2px solid var(--ink); }
-.plate--ink { background: var(--ink); color: var(--paper); }
+.plate { position: relative; background: var(--paper); border: 2px solid var(--ink); }
+.plate--ink { position: relative; background: var(--ink); color: var(--paper); }
 .plate--sand { background: var(--sand); color: var(--ink); }
 .plate--hl { background: var(--highlight); color: var(--ink); }
 .hard { box-shadow: 6px 6px 0 0 var(--ink); }
 .hard-sm { box-shadow: 4px 4px 0 0 var(--ink); }
 .xo { border: 2px solid var(--ink); }
+/* Halftone texture for ink plate */
+.plate--ink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, var(--paper) 10%, transparent 10%),
+    radial-gradient(circle at 50% 70%, var(--paper) 10%, transparent 10%),
+    radial-gradient(circle at 80% 40%, var(--paper) 10%, transparent 10%);
+  background-size: 20px 20px;
+  opacity: 0.15;
+  pointer-events: none;
+}
 
 /* --- rak / list bergaris --- */
 .rack > * + * { border-top: 2px solid var(--ink); }
