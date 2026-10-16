@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gitagallery-jambi.pages.dev/sitemap-index.xml
