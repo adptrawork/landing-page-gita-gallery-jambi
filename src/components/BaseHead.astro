@@ -1,13 +1,65 @@
 ---
-interface Props { title: string; description: string; canonicalUrl: string; image?: string; }
-import { business } from '../data/business';
-const { title, description, canonicalUrl, image = business.ogImage } = Astro.props;
+import { business, socials } from '../data/business';
+
+interface Crumb { name: string; path: string }
+interface FaqItem { q: string; a: string }
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  image?: string;
+  breadcrumbs?: Crumb[];
+  faq?: FaqItem[];
+}
+const { title, description, canonicalUrl, image = business.ogImage, breadcrumbs, faq } = Astro.props;
+
+const site = (Astro.site?.toString() ?? 'https://landing-page-gita-gallery-jambi.adi-putra-work1.workers.dev').replace(/\/$/, '');
 const ogImage = new URL(image, Astro.site ?? Astro.url).toString();
-const faq = [
-  { q: 'Apakah Gita Gallery bisa pesan hampers custom?', a: 'Bisa. Gita melayani hampers dan parsel custom untuk wisuda, lamaran, dan Lebaran via WA khusus hampers 0852-7308-8931.' },
-  { q: 'Bagaimana cara gabung reseller Gita Gallery?', a: 'Chat WA grosir 0812-6424-9684 untuk syarat reseller dan daftar harga grosir. WA admin 0812-6424-9685 untuk ecer.' },
-  { q: 'Apakah bisa order tanpa datang ke toko?', a: 'Bisa. Cari Gita Gallery di GoFood untuk order cepat, atau order via Shopee gitakosmetikjambi dan TikTok @gitagallery.' },
-];
+const fontHref = 'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&amp;family=Archivo+Black&amp;display=swap';
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'GiftStore'],
+  name: business.name,
+  url: `${site}/`,
+  image: ogImage,
+  description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address,
+    addressLocality: business.city,
+    addressRegion: 'Jambi',
+    addressCountry: 'ID',
+  },
+  telephone: business.phone,
+  openingHours: 'Mo-Su 08:00-22:00',
+  sameAs: [business.instagram, ...socials.filter((s) => !s.url.includes('wa.me')).map((s) => s.url)],
+};
+
+const breadcrumbLd = breadcrumbs && breadcrumbs.length > 1
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs.map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: c.name,
+        item: `${site}${c.path}`,
+      })),
+    }
+  : null;
+
+const faqLd = faq && faq.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }
+  : null;
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -24,22 +76,18 @@ const faq = [
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:locale" content="id_ID" />
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalUrl} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImage} />
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org", "@type": "GiftStore",
-  name: business.name, url: Astro.site?.toString(), image: ogImage, description: description,
-  address: { "@type": "PostalAddress", streetAddress: business.address, addressLocality: business.city, addressRegion: "Jambi", addressCountry: "ID" },
-  telephone: business.phone, openingHours: "Mo-Su 08:00-22:00",
-  aggregateRating: { "@type": "AggregateRating", ratingValue: business.rating, reviewCount: business.reviewCount }
-})} />
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org", "@type": "FAQPage",
-  mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } }))
-})} />
-<link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/geist" media="print" onload="this.media='all'" />
-<noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/geist" /></noscript>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Font: Archivo Black (display) + Archivo (body/UI) — non-blocking, display=swap -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href={fontHref} media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href={fontHref} /></noscript>
+
+<script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+{breadcrumbLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
+{faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}

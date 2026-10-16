@@ -1,12 +1,24 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
+import ChannelIcon from '../components/ui/ChannelIcon.astro';
 import '../styles/global.css';
-import { business, waLink } from '../data/business';
-interface Props { title: string; description: string; canonicalPath?: string; image?: string; }
-const { title, description, canonicalPath = '/', image } = Astro.props;
-const site = (Astro.site?.toString() ?? 'https://gitagallery-jambi.pages.dev').replace(/\/$/, '');
+import { business, socials, waLink } from '../data/business';
+
+interface Crumb { name: string; path: string }
+interface FaqItem { q: string; a: string }
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  image?: string;
+  breadcrumbs?: Crumb[];
+  faq?: FaqItem[];
+}
+const { title, description, canonicalPath = '/', image, breadcrumbs, faq } = Astro.props;
+
+const site = (Astro.site?.toString() ?? 'https://landing-page-gita-gallery-jambi.adi-putra-work1.workers.dev').replace(/\/$/, '');
 const canonicalUrl = `${site}${canonicalPath}`;
-const cta = waLink(`Halo ${business.name}, saya mau tanya stok produk. Apakah ready?`);
+const cta = waLink(`Halo ${business.name}, saya mau order via WhatsApp.`);
 const path = Astro.url.pathname;
 const nav = [
   { href: '/', label: 'Beranda' },
@@ -15,76 +27,123 @@ const nav = [
   { href: '/tentang', label: 'Tentang' },
 ];
 const active = (h: string) => (h === '/' ? path === '/' : path.startsWith(h));
+/* buang angka klaim (mis. jumlah pengikut) — tampilkan handle kanal saja */
+const handle = (note: string) => note.split('•')[0].split('—')[0].trim();
+const channels = socials.map((s) => ({ label: s.label, url: s.url, handle: handle(s.note) }));
 ---
 <!doctype html>
 <html lang="id">
 <head>
-  <BaseHead title={title} description={description} canonicalUrl={canonicalUrl} image={image} />
+  <BaseHead title={title} description={description} canonicalUrl={canonicalUrl} image={image} breadcrumbs={breadcrumbs} faq={faq} />
 </head>
-<body class="bg-[#f4faf9] text-zinc-950 antialiased">
-  <a href="#konten" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:rounded-full focus:text-sm focus:bg-white focus:text-zinc-950">Lewati ke konten</a>
-  <header class="sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-slate-200/50">
-    
-    <nav class="max-w-7xl mx-auto px-4" aria-label="Navigasi utama">
+<body class="antialiased">
+  <a href="#konten" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 btn btn--accent">Lewati ke konten</a>
+
+  <header class="sticky top-0 z-40 border-b-2 border-[#171714]" style="background:rgba(255,253,246,.94);backdrop-filter:blur(8px)">
+    <nav class="mx-auto max-w-6xl px-4" aria-label="Navigasi utama">
       <input id="nav-toggle" type="checkbox" class="peer sr-only" />
-      <div class="flex items-center justify-between py-3 gap-3">
-        <a href="/" class="font-bold tracking-tighter text-sm md:text-base">Gita Gallery <span class="text-teal-700">— Hampers & Kosmetik</span></a>
-        <div class="hidden md:flex gap-6 text-sm text-zinc-600">
+      <div class="flex items-center justify-between gap-3 py-3">
+        <a href="/" class="display text-lg leading-none sm:text-xl">
+          Gita <span class="accent">Gallery</span>
+          <span class="mt-1 block text-[.58rem] font-semibold tracking-[.22em] soft" style="font-family:'Archivo',ui-sans-serif,system-ui,sans-serif;letter-spacing:.22em">JAMBI — KOSMETIK &amp; HAMPERS</span>
+        </a>
+
+        <div class="hidden items-center gap-6 md:flex">
           {nav.map((n) => (
-            <a href={n.href} aria-current={active(n.href) ? 'page' : undefined} class:list={["transition " + "hover:text-zinc-950", active(n.href) && "text-zinc-950 font-semibold underline underline-offset-8 decoration-teal-700"]}>{n.label}</a>
+            <a
+              href={n.href}
+              aria-current={active(n.href) ? 'page' : undefined}
+              class:list={[
+                'border-b-2 px-1 py-2 text-[.78rem] font-bold uppercase tracking-[.12em] transition-colors',
+                active(n.href) ? 'border-[#B8301D] accent' : 'border-transparent hover:border-[#171714]',
+              ]}
+            >{n.label}</a>
           ))}
         </div>
+
         <div class="flex items-center gap-2">
-          <a href={cta} class="hidden sm:inline-flex items-center justify-center bg-teal-700 text-white px-5 py-2.5 min-h-[48px] rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WA</a>
-          <label for="nav-toggle" id="nav-label" aria-label="Buka atau tutup menu navigasi" aria-expanded="false" aria-controls="menu-mobile" class="md:hidden inline-flex items-center justify-center min-h-[48px] min-w-[48px] rounded-full border border-zinc-200 cursor-pointer">
-            <svg class="icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-            <svg class="icon-close hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          <a href={cta} class="btn btn--accent hidden sm:inline-flex">Order WhatsApp</a>
+          <label for="nav-toggle" id="nav-label" aria-label="Buka atau tutup menu navigasi" aria-expanded="false" aria-controls="menu-mobile" class="inline-flex min-h-[48px] min-w-[48px] cursor-pointer items-center justify-center border-2 border-[#171714] md:hidden">
+            <svg class="icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+            <svg class="icon-close hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </label>
         </div>
       </div>
+
       <div class="nav-panel md:hidden" id="menu-mobile">
         <div>
-          <div class="flex flex-col gap-1 pb-4">
+          <div class="flex flex-col gap-2 pb-4">
             {nav.map((n) => (
-              <a href={n.href} aria-current={active(n.href) ? 'page' : undefined} class:list={["flex items-center w-full px-4 min-h-[48px] py-3 rounded-2xl text-base transition " + "hover:text-zinc-950", active(n.href) && "text-zinc-950 font-semibold underline underline-offset-8 decoration-teal-700"]}>{n.label}</a>
+              <a
+                href={n.href}
+                aria-current={active(n.href) ? 'page' : undefined}
+                class:list={[
+                  'flex min-h-[48px] w-full items-center border-b-2 px-1 py-3 text-base font-bold uppercase tracking-[.08em]',
+                  active(n.href) ? 'border-[#B8301D] accent' : 'border-[#EADFC8]',
+                ]}
+              >{n.label}</a>
             ))}
-            <a href={cta} class="sm:hidden inline-flex items-center justify-center bg-teal-700 text-white px-5 min-h-[48px] rounded-full text-sm font-medium mt-2">Pesan via WA</a>
+            <a href={cta} class="btn btn--accent mt-1 sm:hidden">Order WhatsApp</a>
           </div>
         </div>
       </div>
     </nav>
   </header>
-  <main id="konten"><slot /></main>
-  <footer class="mt-20 border-t border-slate-200/50 bg-white">
-    <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-12 gap-8">
-      <div class="md:col-span-7">
-        <p class="font-bold tracking-tighter text-lg">Gita Gallery Jambi</p>
-        <p class="mt-2 text-base text-gray-600 leading-relaxed max-w-[65ch]">{business.address} — {business.hours}</p>
-        <p class="mt-2 text-sm text-zinc-400 max-w-[65ch]">Harga dapat berubah, konfirmasi via WA toko. Label Terverifikasi = data dicek dari sumber resmi; Estimasi = perkiraan.</p>
-        <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-          <a href="/" class="underline underline-offset-4 min-h-[48px] inline-flex items-center">Beranda</a>
-          <a href="/katalog" class="underline underline-offset-4 min-h-[48px] inline-flex items-center">Katalog</a>
-          <a href="/promo" class="underline underline-offset-4 min-h-[48px] inline-flex items-center">Promo</a>
-          <a href="/tentang" class="underline underline-offset-4 min-h-[48px] inline-flex items-center">Tentang</a>
+
+  <main id="konten" class="min-h-[100dvh]"><slot /></main>
+
+  <!-- Footer NAP ringkas -->
+  <footer class="mt-20 border-t-2 border-[#171714] bg-[#171714] text-[#FFFDF6]">
+    <div class="mx-auto max-w-6xl px-4 py-14">
+      <div class="grid gap-10 md:grid-cols-12">
+        <div class="md:col-span-6">
+          <p class="display text-3xl sm:text-4xl">Gita Gallery <span class="text-[#EFE9A6]">Jambi</span></p>
+          <address class="mt-5 space-y-2 not-italic text-sm leading-relaxed">
+            <p>{business.address}</p>
+            <p>{business.hours}</p>
+            <p><a href={cta} class="underline underline-offset-4">WA Admin — {business.phoneDisplay}</a></p>
+          </address>
+          <p class="mt-4 text-xs" style="color:rgba(255,253,246,.72)">Label Terverifikasi = dicek dari kanal resmi toko; Estimasi = perkiraan. Harga di situs ini estimasi, konfirmasi via WA.</p>
+        </div>
+
+        <nav class="md:col-span-3" aria-label="Navigasi footer">
+          <p class="text-[.66rem] font-bold uppercase tracking-[.2em]" style="color:rgba(255,253,246,.72)">Halaman</p>
+          <ul class="mt-3 space-y-1 text-sm">
+            {nav.map((n) => (
+              <li><a href={n.href} class="inline-flex min-h-[48px] items-center underline underline-offset-4">{n.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+
+        <div class="md:col-span-3">
+          <p class="text-[.66rem] font-bold uppercase tracking-[.2em]" style="color:rgba(255,253,246,.72)">Kanal resmi</p>
+          <ul class="mt-3 space-y-1 text-sm">
+            {channels.map((c) => (
+              <li>
+                <a href={c.url} class="inline-flex min-h-[48px] items-center gap-2 underline underline-offset-4">
+                  <ChannelIcon name={c.label} size={16} />
+                  <span>{c.label} — {c.handle}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-      <div class="md:col-span-5">
-        <p class="font-semibold text-sm">Hubungi</p>
-        <div class="mt-3 flex flex-col gap-2 text-sm">
-          <a href={cta} class="underline underline-offset-4 min-h-[48px] inline-flex items-center">WhatsApp ({business.phoneDisplay})</a>
-          <a href={business.mapsUrl} class="underline underline-offset-4 min-h-[48px] inline-flex items-center">Google Maps — rute ke lokasi</a>
-        </div>
-        <p class="mt-6 text-xs text-zinc-400">© 2026 {business.name} — {business.city}.</p>
+
+      <div class="mt-10 flex flex-wrap justify-between gap-3 border-t pt-6 text-xs" style="border-color:rgba(255,253,246,.28);color:rgba(255,253,246,.72)">
+        <p>© 2026 {business.name} — {business.city}</p>
+        <p>Alamat &amp; jam: {business.addressStatus} · {business.hoursStatus}</p>
       </div>
     </div>
   </footer>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const t = document.getElementById('nav-toggle') as HTMLInputElement | null;
       const l = document.getElementById('nav-label');
       if (t && l) t.addEventListener('change', () => l.setAttribute('aria-expanded', t.checked ? 'true' : 'false'));
-      document.querySelectorAll('[data-mapfacade]').forEach((root) => {
-        const btn = root.querySelector('[data-mapbtn]');
+      document.querySelectorAll<HTMLElement>('[data-mapfacade]').forEach((root) => {
+        const btn = root.querySelector<HTMLElement>('[data-mapbtn]');
         if (!btn) return;
         btn.addEventListener('click', () => {
           const f = document.createElement('iframe');

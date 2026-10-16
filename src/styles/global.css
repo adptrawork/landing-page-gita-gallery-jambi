@@ -1,65 +1,137 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root { --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); }
-html { scroll-behavior: smooth; }
+/* ==========================================================================
+   GITA GALLERY — poster retail / pop energy
+   Font: Archivo Black (display) + Archivo (body/UI)
+   Palet: paper #FFFDF6 · ink #171714 · accent #B8301D · highlight #EFE9A6 · sand #EADFC8
+   ========================================================================== */
+:root {
+  --paper: #FFFDF6;
+  --ink: #171714;
+  --ink-soft: rgba(23, 23, 20, .62);
+  --accent: #B8301D;
+  --highlight: #EFE9A6;
+  --sand: #EADFC8;
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body { max-width: 100%; overflow-x: clip; }
 body {
-  font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
-  background: #f4faf9; color: #09090b;
+  font-family: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
-.font-mono-num { font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
-.reveal { animation: rise 0.7s var(--ease-premium) both; }
-.d-1 { animation-delay: 0.06s; } .d-2 { animation-delay: 0.12s; }
-.d-3 { animation-delay: 0.18s; } .d-4 { animation-delay: 0.24s; }
-.d-5 { animation-delay: 0.3s; } .d-6 { animation-delay: 0.36s; }
-@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-/* curtain reveal — two panels slide via transform/opacity only */
-.curtain { position: relative; overflow: hidden; }
-.curtain::before, .curtain::after {
-  content: ""; position: absolute; inset: 0; width: 50%; z-index: 2;
-  background: #0f766e; animation: curtain 1.4s cubic-bezier(0.16,1,0.3,1) 0.2s both;
-}
-.curtain::before { left: 0; } .curtain::after { right: 0; animation-delay: 0.2s; }
-@keyframes curtain { from { transform: scaleX(1); opacity: 1; } to { transform: scaleX(0); opacity: 0; } }
-.curtain::before { transform-origin: left; } .curtain::after { transform-origin: right; }
-/* sticky stack */
-.stack-card { position: sticky; top: 5.5rem; }
-img { background: #f4f4f5; }
-.snap-row { scroll-snap-type: x mandatory; }
-.snap-row > * { scroll-snap-align: center; }
-@media (prefers-reduced-motion: reduce) { .reveal, .curtain::before, .curtain::after { animation: none; } html { scroll-behavior: auto; } }
+[hidden] { display: none !important; }
+img { max-width: 100%; height: auto; background: var(--sand); }
+::selection { background: var(--highlight); color: var(--ink); }
 
-/* ==== overhaul: responsive guard + shared components (CSS-only, tanpa dep baru) ==== */
-html, body { max-width: 100%; overflow-x: clip; }
-img { max-width: 100%; height: auto; }
-.marquee { overflow: hidden; max-width: 100%; }
-.marquee-track { display: inline-flex; gap: 2.5rem; padding-right: 2.5rem; animation: slide 22s linear infinite; will-change: transform; }
+/* --- display type: judul poster --- */
+.display {
+  font-family: 'Archivo Black', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+}
+.font-num { font-variant-numeric: tabular-nums; }
+.soft { color: var(--ink-soft); }
+.accent { color: var(--accent); }
+.marker {
+  background: var(--highlight);
+  color: var(--ink);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 .12em;
+}
+
+/* --- plate / poster frame --- */
+.plate { background: var(--paper); border: 2px solid var(--ink); }
+.plate--ink { background: var(--ink); color: var(--paper); }
+.plate--sand { background: var(--sand); color: var(--ink); }
+.plate--hl { background: var(--highlight); color: var(--ink); }
+.hard { box-shadow: 6px 6px 0 0 var(--ink); }
+.hard-sm { box-shadow: 4px 4px 0 0 var(--ink); }
+.xo { border: 2px solid var(--ink); }
+
+/* --- rak / list bergaris --- */
+.rack > * + * { border-top: 2px solid var(--ink); }
+.rack-b { border-bottom: 2px solid var(--ink); }
+
+/* --- tag / chip --- */
+.tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  border: 2px solid var(--ink); padding: .3rem .6rem;
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; line-height: 1.4;
+}
+.tag--hl { background: var(--highlight); }
+.tag--ink { background: var(--ink); color: var(--paper); }
+.tag--accent { background: var(--accent); color: #FFFDF6; border-color: var(--accent); }
+
+/* --- tombol --- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 48px; padding: .7rem 1.4rem; border: 2px solid var(--ink);
+  font-weight: 700; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+  transition: transform .3s var(--ease-premium), background-color .3s var(--ease-premium), color .3s var(--ease-premium);
+}
+.btn:active { transform: scale(.98); }
+.btn--ink { background: var(--ink); color: var(--paper); }
+.btn--accent { background: var(--accent); color: #FFFDF6; border-color: var(--accent); }
+.btn--ghost { background: transparent; color: var(--ink); }
+@media (hover: hover) {
+  .btn--ink:hover, .btn--accent:hover { transform: translateY(-2px); }
+  .btn--ghost:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+}
+
+/* --- fokus keyboard --- */
+:where(a, button, summary, input, select, textarea, label[for]):focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px;
+}
+
+/* --- motion (transform/opacity saja) --- */
+.reveal { animation: rise .7s var(--ease-premium) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- marquee --- */
+.marquee-track {
+  display: inline-flex; align-items: center; gap: 2.5rem; padding-right: 2.5rem;
+  animation: slide 26s linear infinite; will-change: transform;
+}
 @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-/* hamburger CSS-only: menu slide-down */
-.nav-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s cubic-bezier(0.16,1,0.3,1); }
+
+/* --- hamburger CSS-only --- */
+.nav-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease-premium); }
 .nav-panel > div { overflow: hidden; min-height: 0; }
 #nav-toggle:checked ~ div .icon-open { display: none; }
 #nav-toggle:checked ~ div .icon-close { display: block; }
 #nav-toggle:checked ~ .nav-panel { grid-template-rows: 1fr; }
-/* katalog skeleton shimmer */
-.skeleton { position: relative; overflow: hidden; background: rgba(127,127,127,0.14); }
-.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent); animation: shimmer 1.4s infinite; }
-@keyframes shimmer { to { transform: translateX(100%); } }
-/* FAQ details */
-details.faq { border-radius: 1.5rem; }
+
+/* --- FAQ --- */
 details.faq summary { cursor: pointer; list-style: none; min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 details.faq summary::-webkit-details-marker { display: none; }
-details.faq summary .plus { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); flex: none; }
+details.faq summary .plus { transition: transform .3s var(--ease-premium); flex: none; }
 details.faq[open] summary .plus { transform: rotate(45deg); }
-/* form: target sentuh + error text */
+
+/* --- form --- */
 input, select, textarea { min-height: 48px; }
+input, textarea { border: 2px solid var(--ink); background: var(--paper); color: var(--ink); }
 .field-err { display: none; }
 .field-invalid .field-err { display: block; }
-/* tabel: wrapper scroll-x */
-.table-wrap { overflow-x: auto; max-width: 100%; }
-/* cegah teks terpotong di kartu */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .marquee-track, .skeleton::after { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+
+/* --- util tambahan --- */
+.marquee { overflow: hidden; max-width: 100%; }
 .card-clamp { overflow-wrap: anywhere; }
-@media (prefers-reduced-motion: reduce) { .marquee-track, .skeleton::after { animation: none; } }
+.skeleton { position: relative; overflow: hidden; background: rgba(23, 23, 20, .12); }
+.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255, 253, 246, .75), transparent); animation: shimmer 1.4s infinite; }
+@keyframes shimmer { to { transform: translateX(100%); } }

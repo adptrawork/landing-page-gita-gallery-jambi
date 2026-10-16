@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // TODO-DEPLOY: ganti site dengan domain final per bisnis, contoh https://narina-beauty-jambi.com
 export default defineConfig({
-  site: 'https://gitagallery-jambi.pages.dev',
+  site: 'https://landing-page-gita-gallery-jambi.adi-putra-work1.workers.dev',
   output: 'static',
   integrations: [tailwind(), sitemap()],
 });
