@@ -16,7 +16,7 @@ const description = 'Katalog Gita Gallery Jambi: 8 produk kosmetik & hampers. Fi
 
     <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter label produk">
       {badges.map((b, i) => (
-        <button data-filter={b} class:list={['filter-btn btn', i === 0 ? 'btn--ink' : 'btn--ghost']}>{b}</button>
+        <button data-filter={b} class:list={['filter-btn btn min-w-[48px]', i === 0 ? 'btn--ink' : 'btn--ghost']}>{b}</button>
       ))}
     </div>
     <p id="filter-count" class="mt-4 font-num text-xs font-bold uppercase tracking-[.18em] soft" aria-live="polite"></p>

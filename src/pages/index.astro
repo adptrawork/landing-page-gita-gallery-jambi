@@ -75,7 +75,7 @@ const channels = socials.map((s) => ({ label: s.label, url: s.url, handle: handl
 
   <!-- 03 Tiga tile layanan asimetris -->
   <section class="mx-auto max-w-6xl px-4 py-12 md:py-16" aria-labelledby="layanan-h">
-    <SectionHead no="03" kicker="Layanan" title="Tiga cara kami melayani" desc="Ecer, grosir, hampers — order dari nol, semua dikonfirmasi via WhatsApp." />
+    <SectionHead no="03" kicker="Layanan" title="Tiga cara kami melayani" desc="Ecer, grosir, hampers — order dari nol, semua dikonfirmasi via WhatsApp." headingId="layanan-h" />
     <div class="mt-8 grid gap-6 md:grid-cols-[2fr_1fr]">
       <article class={`plate hard p-6 sm:p-8 reveal ${services[0].tone === 'plate--hl' ? 'plate--hl' : ''}`} style="--i:0">
         <span class="tag tag--ink">{services[0].title}</span>
@@ -99,7 +99,7 @@ const channels = socials.map((s) => ({ label: s.label, url: s.url, handle: handl
 
   <!-- 04 Dua kolom cerita zig-zag -->
   <section class="mx-auto max-w-6xl px-4 py-12 md:py-16" aria-labelledby="cerita-h">
-    <SectionHead no="04" kicker="Cerita toko" title="Ritel walk-in vs reseller & hampers" />
+    <SectionHead no="04" kicker="Cerita toko" title="Ritel walk-in vs reseller & hampers" headingId="cerita-h" />
     <div class="mt-8 grid gap-6 md:grid-cols-2">
       <article class="plate--sand hard p-6 sm:p-8">
         <span class="tag tag--ink">Walk-in retail</span>
@@ -126,7 +126,7 @@ const channels = socials.map((s) => ({ label: s.label, url: s.url, handle: handl
 
   <!-- 05 Katalog sorotan rak ber-rule -->
   <section class="mx-auto max-w-6xl px-4 py-12 md:py-16" aria-labelledby="sorotan-h">
-    <SectionHead no="05" kicker="Sorotan rak" title="Produk paling dicari" desc="Harga estimasi — konfirmasi stok dan harga final via WhatsApp." />
+    <SectionHead no="05" kicker="Sorotan rak" title="Produk paling dicari" desc="Harga estimasi — konfirmasi stok dan harga final via WhatsApp." headingId="sorotan-h" />
     <div class="mt-8 plate rack overflow-hidden">
       {featured.map((p) => {
         const msg = waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`);
@@ -138,7 +138,7 @@ const channels = socials.map((s) => ({ label: s.label, url: s.url, handle: handl
               <p class="mt-1 font-num text-xs uppercase tracking-[.12em] soft">{p.badge} • {p.stock}</p>
             </div>
             <p class="font-num font-bold text-lg">{p.price}</p>
-            <a href={msg} class="btn btn--ghost">WA</a>
+            <a href={msg} class="btn btn--ghost min-w-[48px]">WA</a>
           </div>
         );
       })}
@@ -150,7 +150,7 @@ const channels = socials.map((s) => ({ label: s.label, url: s.url, handle: handl
 
   <!-- 06 Kategori, cara order, jam buka -->
   <section class="mx-auto max-w-6xl px-4 py-12 md:py-16" aria-labelledby="k-cat-h">
-    <SectionHead no="06" kicker="Kategori & order" title="Kategori, cara order, jam buka" />
+    <SectionHead no="06" kicker="Kategori & order" title="Kategori, cara order, jam buka" headingId="k-cat-h" />
     <div class="mt-8 grid gap-6 md:grid-cols-12">
       <div class="md:col-span-5 plate hard-sm p-6">
         <span class="tag tag--hl">Kategori</span>
@@ -174,7 +174,7 @@ const channels = socials.map((s) => ({ label: s.label, url: s.url, handle: handl
 
   <!-- 07 Kontak & kunjungan -->
   <section class="mx-auto max-w-6xl px-4 py-12 md:py-16" aria-labelledby="kontak-h">
-    <SectionHead no="07" kicker="Kontak & kunjungan" title="Alamat toko, map, dan kanal resmi" desc="Cek rute sebelum datang. Order dan tanya stok via kanal resmi." />
+    <SectionHead no="07" kicker="Kontak & kunjungan" title="Alamat toko, map, dan kanal resmi" desc="Cek rute sebelum datang. Order dan tanya stok via kanal resmi." headingId="kontak-h" />
     <div class="mt-8 grid gap-6 md:grid-cols-12">
       <div class="md:col-span-5 space-y-4">
         <div class="plate hard-sm p-6">

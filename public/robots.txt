@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gitagallery-jambi.pages.dev/sitemap-index.xml
+Sitemap: https://landing-page-gita-gallery-jambi.adi-putra-work1.workers.dev/sitemap-index.xml

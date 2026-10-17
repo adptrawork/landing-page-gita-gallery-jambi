@@ -138,6 +138,7 @@ input, textarea { border: 2px solid var(--ink); background: var(--paper); color:
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .marquee-track, .skeleton::after { animation: none; }
+  .btn, .faq summary .plus, details.faq summary { transition: none; }
   html { scroll-behavior: auto; }
 }
 
